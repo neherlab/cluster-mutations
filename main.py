@@ -5,14 +5,16 @@ import pathlib
 
 
 #%%
-aa_base_url = 'https://cov-spectrum.ethz.ch/public/api/v1/sample/aa-mutations'
-count_base_url = 'https://cov-spectrum.ethz.ch/public/api/v1/sample/aggregated'
+aa_base_url = 'https://cov-spectrum.ethz.ch/gisaid/api/v1/sample/aa-mutations'
+count_base_url = 'https://cov-spectrum.ethz.ch/gisaid/api/v1/sample/aggregated'
 THRESHOLD = 0.005
 
 clusters = {
     '21A.Delta': ['11514.','4181.','6402.','27752T','28461G','22995A'],
     '21J.Delta': ['4181T','6402T','27752T','28461G','22995A'],
-    '21I.Delta': ['5584G', '11514T', '22227T','27752T','28461G','22995A']
+    '21I.Delta': ['5584G', '11514T', '22227T','27752T','28461G','22995A'],
+    'AY.4.2': ['21995C','22227T','4181T','6402T','27752T','28461G','22995A'],
+    'AY.9': ['1729A', '14030A', '18086T','5584G'],
 }
 
 def build_url(base_url,cluster,threshold):
