@@ -21,29 +21,31 @@ def build_url(base_url,cluster,threshold):
         url += f"&minProportion={threshold:f}"
     return url
 #%%
-for cluster_name, cluster_muts in clusters.items():
-    aa_request_url = build_url(aa_base_url,cluster_muts,THRESHOLD)
-    count_request_url = build_url(count_base_url,cluster_muts,None)
-    print(aa_request_url)
-    print(count_request_url)
-    aa_request = requests.get(aa_request_url)
-    count_request = requests.get(count_request_url)
-    aa = json.loads(aa_request.content)
-    count = json.loads(count_request.content)
-    mutations = []
-    for mutation in aa['data']:
-        mutations.append({'mut': mutation['mutation'], 'count': mutation['proportion']})
 
-    out_json = {
-        "total": count['data'][0]['count'],
-        "counts": mutations
-    }
-    
-    path = pathlib.Path(f"output/{cluster_name}.json")
-    path.parent.mkdir(parents=True, exist_ok=True) 
-    
-    with open(path,'w') as f:
-        json.dump(out_json,f)
+if __name__ == '__main__':
+    for cluster_name, cluster_muts in clusters.items():
+        aa_request_url = build_url(aa_base_url,cluster_muts,THRESHOLD)
+        count_request_url = build_url(count_base_url,cluster_muts,None)
+        print(aa_request_url)
+        print(count_request_url)
+        aa_request = requests.get(aa_request_url)
+        count_request = requests.get(count_request_url)
+        aa = json.loads(aa_request.content)
+        count = json.loads(count_request.content)
+        mutations = []
+        for mutation in aa['data']:
+            mutations.append({'mut': mutation['mutation'], 'count': mutation['proportion']})
+
+        out_json = {
+            "total": count['data'][0]['count'],
+            "counts": mutations
+        }
+        
+        path = pathlib.Path(f"output/{cluster_name}.json")
+        path.parent.mkdir(parents=True, exist_ok=True) 
+        
+        with open(path,'w') as f:
+            json.dump(out_json,f)
 
 
 # %%
